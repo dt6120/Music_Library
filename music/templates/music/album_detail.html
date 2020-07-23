@@ -1,0 +1,61 @@
+{% extends 'music/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container-fluid m-3">
+    <div class="row">
+        <div class="col col-4 ml-3 border">
+            <div class="card">
+                <img src="{{ album.album_logo.url }}" class="card-image-top img-responsive" width="100%" height="100%">
+                <div class="card-header text-center">
+                    <strong>{{ album.album_title }}</strong>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Artist: {{ album.artist }} <br>
+                        Genre: {{ album.genre }} <br>
+                        Songs: {{ album.song_set.count }}
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group-horizontal">
+                        <a href="{% url 'music:album_update' album.id %}" class="btn btn-outline-warning"><i class="fas fa-pen"></i></a>
+                        <a href="{% url 'music:album_delete' album.id %}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                        {% if album.is_favorite %}
+                            <a href="{% url 'music:toggle_fav_album' album.id %}" class="btn btn-outline-success"><i class="fas fa-star"></i></a>
+                        {% else %}
+                            <a href="{% url 'music:toggle_fav_album' album.id %}" class="btn btn-outline-success"><i class="far fa-star"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-4 bg-dark text-light">
+            <div class="row">
+                <h1 class="display-4 text-center">Songs</h1>
+            </div>
+            {% for song in album.song_set.all %}
+                <div class="row m-1 p-1 border-bottom">
+                    <div class="col col-1">
+                        {% if song.is_favorite %}
+                            <a href="{% url 'music:toggle_fav_song' song.id %}" class="btn btn-outline-success btn-sm"><i class="fas fa-star"></i></a>
+                        {% else %}
+                            <a href="{% url 'music:toggle_fav_song' song.id %}" class="btn btn-outline-success btn-sm"><i class="far fa-star"></i></a>
+                        {% endif %}
+                    </div>
+                    <div class="col col-1">
+                        <a href="" class="btn btn-success btn-sm"><i class="fas fa-play"></i></a>
+                    </div>
+                    <div class="col col-8">
+                        {{ song.song_title }}
+                    </div>
+                    <div class="col col-1">
+                        <a href="" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

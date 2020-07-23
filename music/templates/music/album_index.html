@@ -1,0 +1,37 @@
+{% extends 'music/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-3 p-1 bg-dark">
+    <div class="card-columns">
+        {% for album in album_list %}
+            <div class="card p-1">
+                <img src="{{ album.album_logo.url }}" class="card-image-top img-responsive" width="100%" height="250">
+                <div class="card-header text-center">
+                    <strong>{{ album.album_title }}</strong>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Artist: {{ album.artist }} <br>
+                        Genre: {{ album.genre }} <br>
+                        Songs: {{ album.song_set.count }}
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group-horizontal">
+                        <a href="{% url 'music:album_detail' album.pk %}" class="btn btn-outline-info">View</a>
+                        <a href="{% url 'music:album_update' album.id %}" class="btn btn-outline-warning"><i class="fas fa-pen"></i></a>
+                        <a href="{% url 'music:album_delete' album.id %}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                        {% if album.is_favorite %}
+                            <a href="{% url 'music:toggle_fav_album' album.id %}" class="btn btn-outline-success"><i class="fas fa-star"></i></a>
+                        {% else %}
+                            <a href="{% url 'music:toggle_fav_album' album.id %}" class="btn btn-outline-success"><i class="far fa-star"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

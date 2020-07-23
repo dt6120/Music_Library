@@ -1,0 +1,46 @@
+{% extends 'music/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-3">
+    <div class="row m-1 p-1 border-bottom display-4">
+        <div class="col col-1"></div>
+        <div class="col col-5">
+            Title
+        </div>
+        <div class="col col-3">
+            Artist
+        </div>
+        <div class="col col-3">
+            Album
+        </div>
+    </div>
+    {% for song in song_list %}
+        <div class="row m-1 p-1 border-bottom">
+<!--            <div class="col col-1">-->
+<!--                {% if song.is_favorite %}-->
+<!--                    <a href="{% url 'music:toggle_fav_song' song.id %}" class="btn btn-outline-success btn-sm"><i class="fas fa-star"></i></a>-->
+<!--                {% else %}-->
+<!--                    <a href="{% url 'music:toggle_fav_song' song.id %}" class="btn btn-outline-success btn-sm"><i class="far fa-star"></i></a>-->
+<!--                {% endif %}-->
+<!--            </div>-->
+            <div class="col col-1">
+                <a href="" class="btn btn-success btn-sm"><i class="fas fa-play"></i></a>
+            </div>
+            <div class="col col-5">
+                {{ song.song_title }}
+            </div>
+            <div class="col col-3">
+                {{ song.album.artist }}
+            </div>
+            <div class="col col-3">
+                {{ song.album.album_title }}
+            </div>
+<!--            <div class="col col-1">-->
+<!--                <a href="" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></a>-->
+<!--            </div>-->
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
